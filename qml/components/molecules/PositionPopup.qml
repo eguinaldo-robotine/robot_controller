@@ -1,34 +1,60 @@
-import QtQuick 2.15
+import QtQuick 2.15 
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Window 2.15   // para Screen se quiser usar
+import QtQuick.Window 2.15
 import "../atoms"
 
 Popup {
     id: toast
     modal: true
     focus: true
-    parent: Overlay.overlay               
-    anchors.centerIn: Overlay.overlay      
+    parent: Overlay.overlay
+    anchors.centerIn: Overlay.overlay
     closePolicy: Popup.CloseOnPressOutside
 
     width:  Math.min(Overlay.overlay.width  * 0.60, 900)
     height: Math.min(Overlay.overlay.height * 0.80, 700)
 
     property string mainButtonText: "Salvar"
-    property var poses
     property string actualPositionName: ""
-    property string poseId: "" 
+    property string poseId: ""
     property alias positionName: textInput.text
     property alias poseXValue: poseX.value
     property alias poseYValue: poseY.value
-    property alias poseZValue: poseZ.value   
+    property alias poseZValue: poseZ.value
     property alias poseRXValue: poseRX.value
     property alias poseRYValue: poseRY.value
-    property alias poseRZValue: poseRZ.value   
+    property alias poseRZValue: poseRZ.value
 
     signal mainButtonClicked()
-    
+
+    function openWith(itemId, itemName, x, y, z, rx, ry, rz) {
+        poseId = itemId ? String(itemId) : ""
+        actualPositionName = itemName || ""
+        textInput.text = itemName || ""
+        poseX.value  = (x  !== undefined && x  !== null) ? String(x)  : "0.0"
+        poseY.value  = (y  !== undefined && y  !== null) ? String(y)  : "0.0"
+        poseZ.value  = (z  !== undefined && z  !== null) ? String(z)  : "0.0"
+        poseRX.value = (rx !== undefined && rx !== null) ? String(rx) : "0.0"
+        poseRY.value = (ry !== undefined && ry !== null) ? String(ry) : "0.0"
+        poseRZ.value = (rz !== undefined && rz !== null) ? String(rz) : "0.0"
+        open()
+    }
+
+    function clearState() {
+        poseId = ""
+        actualPositionName = ""
+        textInput.text = ""
+        poseX.value = "0.0"
+        poseY.value = "0.0"
+        poseZ.value = "0.0"
+        poseRX.value = "0.0"
+        poseRY.value = "0.0"
+        poseRZ.value = "0.0"
+    }
+
+    onClosed: clearState()
+
     background: Rectangle {
         anchors.fill: parent
         color: "#eeeeee"
@@ -43,19 +69,6 @@ Popup {
     exit: Transition {
         NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 160 }
         NumberAnimation { property: "scale"; from: 1; to: 0.96; duration: 160; easing.type: Easing.InCubic }
-    }
-
-    Connections {
-        target: PositionController
-        function onCurrentPoseLoaded(pose) {
-            textInput.text = actualPositionName
-            poseX.value = pose.x.toFixed(2)
-            poseY.value = pose.y.toFixed(2)
-            poseZ.value = pose.z.toFixed(2)
-            poseRX.value = pose.rx.toFixed(2)
-            poseRY.value = pose.ry.toFixed(2)
-            poseRZ.value = pose.rz.toFixed(2)
-        }
     }
 
     ColumnLayout {
@@ -96,7 +109,7 @@ Popup {
                     color: "#333"
                     verticalAlignment: TextInput.AlignVCenter
                     background: Rectangle { color: "transparent" }
-                    padding: 8              
+                    padding: 8
                 }
             }
         }
@@ -110,12 +123,12 @@ Popup {
             Layout.rightMargin: 8
             Layout.alignment: Qt.AlignHCenter
 
-            PoseInput { id: poseX;  nameInput: "Pose X";  value: poses ? `${poses.posX}`  : "0.0" }
-            PoseInput { id: poseY;  nameInput: "Pose Y";  value: poses ? `${poses.posY}`  : "0.0" }
-            PoseInput { id: poseZ;  nameInput: "Pose Z";  value: poses ? `${poses.posZ}`  : "0.0" }  // ⬅ label corrigido
-            PoseInput { id: poseRX; nameInput: "Pose RX"; value: poses ? `${poses.posRX}` : "0.0" }
-            PoseInput { id: poseRY; nameInput: "Pose RY"; value: poses ? `${poses.posRY}` : "0.0" }
-            PoseInput { id: poseRZ; nameInput: "Pose RZ"; value: poses ? `${poses.posRZ}` : "0.0" }
+            PoseInput { id: poseX;  nameInput: "Pose X";  value: "0.0" }
+            PoseInput { id: poseY;  nameInput: "Pose Y";  value: "0.0" }
+            PoseInput { id: poseZ;  nameInput: "Pose Z";  value: "0.0" }
+            PoseInput { id: poseRX; nameInput: "Pose RX"; value: "0.0" }
+            PoseInput { id: poseRY; nameInput: "Pose RY"; value: "0.0" }
+            PoseInput { id: poseRZ; nameInput: "Pose RZ"; value: "0.0" }
         }
 
         RowLayout {
@@ -123,14 +136,14 @@ Popup {
             spacing: 8
             CommonBtn {
                 text: "Posição Atual"
-                style: "info"  
+                style: "info"
                 onClicked: PositionController.get_current_pose()
             }
             Item { Layout.fillWidth: true }
 
             CommonBtn {
                 text: "Mover"
-                style: "secondary"  
+                style: "secondary"
                 onClicked: {
                     PositionController.move_j(
                         textInput.text,
@@ -155,12 +168,12 @@ Popup {
                 style: "danger"
                 onClicked: toast.close()
             }
-            CommonBtn { 
+            CommonBtn {
                 text: mainButtonText
                 style: "success"
                 onClicked: {
                     if (textInput.text.length === 0) return
-                    mainButtonClicked()  
+                    mainButtonClicked()
                     toast.close()
                 }
             }

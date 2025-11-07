@@ -9,7 +9,7 @@ Rectangle {
     Layout.fillWidth: true
     Layout.preferredHeight: 800
     radius: 30
-    color: 'transparent'
+    color: "transparent"
 
     ListModel { id: savedPositionsModel }
 
@@ -24,19 +24,19 @@ Rectangle {
                     id: pose.id,
                     name: pose.name,
                     poses: {
-                        posX: pose.x, 
-                        posY: pose.y, 
-                        posZ: pose.z, 
+                        posX: pose.x,
+                        posY: pose.y,
+                        posZ: pose.z,
                         posRX: pose.rx,
-                        posRY: pose.ry, 
-                        posRZ: pose.rz,
-                    } 
+                        posRY: pose.ry,
+                        posRZ: pose.rz
+                    }
                 })
             }
         }
     }
 
-    PositionPopup{
+    PositionPopup {
         id: addPositionPopup
         onMainButtonClicked: {
             PositionController.save_pose(
@@ -52,10 +52,9 @@ Rectangle {
         }
     }
 
-    PositionPopup{
+    PositionPopup {
         id: editPositionPopup
         mainButtonText: "Editar"
-
         onMainButtonClicked: {
             PositionController.update_pose(
                 actualPositionName,
@@ -71,23 +70,19 @@ Rectangle {
         }
     }
 
-
-
     ColumnLayout {
         id: column
         anchors.fill: parent
         Layout.margins: 30
 
-        Title {Layout.alignment: Qt.AlignJustify; titleText: "Lista de Posições" }
+        Title { Layout.alignment: Qt.AlignJustify; titleText: "Lista de Posições" }
 
-        RowLayout{
-
+        RowLayout {
             id: buttonsControllers
-
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignJustify  
+            Layout.alignment: Qt.AlignJustify
             spacing: 0
-           
+
             TextInputBar {
                 id: positionInputBar
                 buttonName: "Pesquisar"
@@ -98,14 +93,14 @@ Rectangle {
                 text: "Nova Posição"
                 style: "primary"
                 onClicked: {
-                    addPositionPopup.open()
+                    addPositionPopup.openWith("", "", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
                 }
             }
         }
 
         Rectangle {
             height: 2
-            color: '#b8b8b8'
+            color: "#b8b8b8"
             Layout.fillWidth: true
             Layout.margins: 5
         }
@@ -124,19 +119,24 @@ Rectangle {
                 nameText: name
                 poses: model.poses
 
-                onViewClicked: (id) => {
+                onViewClicked: (itemId) => {
                     console.log("Ver posição", name)
                 }
 
-                onEditClicked: (id) => {
-                    editPositionPopup.poseId = id
-                    editPositionPopup.actualPositionName = name
-                    editPositionPopup.positionName = name
-                    editPositionPopup.poses = model.poses
-                    editPositionPopup.open()
+                onEditClicked: (itemId) => {
+                    editPositionPopup.openWith(
+                        itemId,
+                        name,
+                        poses.posX,
+                        poses.posY,
+                        poses.posZ,
+                        poses.posRX,
+                        poses.posRY,
+                        poses.posRZ
+                    )
                 }
 
-                onDeleteClicked: (id) => {
+                onDeleteClicked: (itemId) => {
                     PositionController.delete_pose(name)
                 }
             }
@@ -150,6 +150,5 @@ Rectangle {
                PositionController.load_poses()
             }
         }
-
     }
 }
