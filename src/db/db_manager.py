@@ -8,7 +8,7 @@ from typing import Generator, Any
 class DB_Manager:
     def __init__(self, db_name: str = "poses.db"):
         self._base_dir = Path(__file__).resolve().parent
-        self._sql_dir = self._base_dir / "sql"
+        self._sql_dir = self._base_dir / "../../sql"
         self._migrations_dir = self._sql_dir / "migrations"
         self._db_path = self._base_dir / db_name
 
