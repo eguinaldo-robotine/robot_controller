@@ -1,8 +1,0 @@
-module Screens.Position
-
-page/PositionPage 1.0 page/PositionPage.qml
-
-components/PoseInput 1.0 components/PoseInput.qml
-components/PositionItem 1.0 components/PositionItem.qml
-components/PositionPopup 1.0 components/PositionPopup.qml
-components/ListPosition 1.0 components/ListPosition.qml

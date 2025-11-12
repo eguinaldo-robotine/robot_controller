@@ -19,7 +19,7 @@ def main() -> None:
     controller = PositionController()
     engine.rootContext().setContextProperty("PositionController", controller)
 
-    qml_file = QUrl.fromLocalFile("qml/main.qml")
+    qml_file = QUrl.fromLocalFile("qml/App.qml")
     engine.load(qml_file)
 
     if not engine.rootObjects():

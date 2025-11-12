@@ -30,7 +30,7 @@ namespaces = true
 files = [
     "main.py",
     "ui/main.qml",
-    "ui/components/",
+    "ui/Components/",
     "controller/",
     "model/",
     "services/",

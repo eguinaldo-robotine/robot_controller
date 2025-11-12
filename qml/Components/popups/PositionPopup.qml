@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
-import components 1.0
+import Components 1.0
 
 Popup {
     id: toast
@@ -136,12 +136,12 @@ Popup {
             Layout.rightMargin: 8
             Layout.alignment: Qt.AlignHCenter
 
-            PoseInput { id: poseX;  nameInput: "Pose X";  value: "0.0" }
-            PoseInput { id: poseY;  nameInput: "Pose Y";  value: "0.0" }
-            PoseInput { id: poseZ;  nameInput: "Pose Z";  value: "0.0" }
-            PoseInput { id: poseRX; nameInput: "Pose RX"; value: "0.0" }
-            PoseInput { id: poseRY; nameInput: "Pose RY"; value: "0.0" }
-            PoseInput { id: poseRZ; nameInput: "Pose RZ"; value: "0.0" }
+            SpinInput { id: poseX;  nameInput: "Pose X";  value: "0.0" }
+            SpinInput { id: poseY;  nameInput: "Pose Y";  value: "0.0" }
+            SpinInput { id: poseZ;  nameInput: "Pose Z";  value: "0.0" }
+            SpinInput { id: poseRX; nameInput: "Pose RX"; value: "0.0" }
+            SpinInput { id: poseRY; nameInput: "Pose RY"; value: "0.0" }
+            SpinInput { id: poseRZ; nameInput: "Pose RZ"; value: "0.0" }
         }
 
         RowLayout {

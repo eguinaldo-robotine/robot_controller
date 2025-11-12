@@ -1,4 +1,4 @@
-module core
+module Components
 
 CommonBtn     1.0 buttons/CommonBtn.qml
 IconBtn       1.0 buttons/IconBtn.qml
@@ -7,5 +7,10 @@ Tag           1.0 headers/Tag.qml
 Title         1.0 headers/Title.qml
 
 TextInputBar  1.0 inputs/TextInputBar.qml
+SpinInput     1.0 inputs/SpinInput.qml
 
 Sidebar       1.0 sidebar/Sidebar.qml
+
+ListPosition  1.0 listPosition/ListPosition.qml
+
+PositionPopup 1.0 popups/PositionPopup.qml

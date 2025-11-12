@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import core 1.0
+import Components 1.0
 
 ApplicationWindow {
     id: mainWindow
@@ -40,7 +40,7 @@ ApplicationWindow {
                 }
 
                 Component.onCompleted: {
-                    pageSelected("Positions")
+                    pageSelected("Position")
                 }
             }
 
@@ -53,7 +53,7 @@ ApplicationWindow {
                     id: stackView
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    initialItem: Qt.resolvedUrl("pages/PositionsPage.qml")
+                    initialItem: Qt.resolvedUrl("pages/PositionPage.qml")
                     clip: true
                     focus: true
 
