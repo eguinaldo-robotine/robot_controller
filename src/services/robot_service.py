@@ -68,6 +68,6 @@ class RobotService:
         if(isinstance(result, tuple)):
             error, position = result
             if(error != 0): return False
-            success = robot.MoveJ(joint_pos = position, tool = 1, user = 2, vel = 200)
+            success = robot.MoveJ(joint_pos = position, tool = 1, user = 0, vel = 200)
             print("Movendo o robo para a posicao salva", success)
             return bool(success == 0)

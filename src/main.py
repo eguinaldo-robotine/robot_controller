@@ -4,6 +4,7 @@ from PySide6.QtQml import QQmlApplicationEngine
 from controllers.position_controller import PositionController
 from utils.robot_singleton import RobotSingletonRCP
 from db.db_manager import DB_Manager
+from PySide6.QtGui import QIcon
 import sys
 
 
@@ -16,9 +17,11 @@ def main() -> None:
 
     engine.addImportPath(QDir.current().filePath("qml"))
 
+    app.setWindowIcon(QIcon("assets/icons/robotine.ico"))
+
     robot = RobotSingletonRCP("192.168.15.199")
-    robot.RobotEnable(True)
-    robot.DragTeachSwitch(False)
+    # robot.RobotEnable(True)
+    # robot.DragTeachSwitch(False)
 
     controller = PositionController()
     engine.rootContext().setContextProperty("PositionController", controller)
